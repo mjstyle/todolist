@@ -12,6 +12,7 @@ Todolist::Application.configure do
   config.log_level                                        = :debug
   config.active_record.mass_assignment_sanitizer          = :strict
   config.active_record.auto_explain_threshold_in_seconds  = 0.5
-  config.assets.js_compressor                             = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false)}
-  config.assets.precompile                               += %w( *.js *.css )
+  #config.assets.js_compressor                             = Sprockets::LazyCompressor.new { Uglifier.new(mangle: false)}
+  config.assets.compile                                   = false
+  #config.assets.precompile                               += %w( *.js *.css )
 end
