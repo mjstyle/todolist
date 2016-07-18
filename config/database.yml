@@ -1,0 +1,20 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 10
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+  host: 127.0.0.1
+  database: todolist_dev
+
+production:
+  host: 127.0.0.1
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: todolist_production
+  pool: 45
+  username: root
+  password: Fhs7dfhrAIf0a

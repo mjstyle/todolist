@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  developer_id: 1
+  developer_ids: MyString
+  start_date: 2016-07-10 20:38:45
+  weekday: MyString
+
+two:
+  developer_id: 1
+  developer_ids: MyString
+  start_date: 2016-07-10 20:38:45
+  weekday: MyString

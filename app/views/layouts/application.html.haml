@@ -1,0 +1,105 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+        %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+          %title= content_for?(:title) ? yield(:title) : "Todolist"
+          = csrf_meta_tags
+          = stylesheet_link_tag "application", :media => "all"
+          = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+          = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+          = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+          = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+          = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+          = javascript_include_tag "application"
+
+        %script{ src: "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js", type: "text/javascript"}
+  %body
+    .navbar.navbar-default.navbar-static-top
+      .container
+        %button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand{:href => "#"} Todolist
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          %ul.nav.navbar-nav
+            -if !current_user
+              %li= link_to "Login", "/login"
+            -else
+              =form_tag '/', id: 'searching_form', method: 'GET' do
+                %li Sorting form:
+                %li
+                  =select_tag :project, options_for_select(['OneClass','Easyke','Solvit'], selected: @project), prompt: 'Project', class: 'chosen_field'
+                %li
+                  =select_tag :developer_id, options_for_select(Developer.all.collect{|t| [t.name, t.id]} + ['General'], selected: @dev_id), prompt: 'Dev', class: 'chosen_field'
+                %li
+                  .head_block
+                    =text_field_tag :start_date, @start_date, placeholder: 'START date', class: ''
+                    =text_field_tag :end_date, @end_date, placeholder: 'END date', class: ''
+                %li
+                  .finished_chekbox
+                    Not Finished:
+                    =check_box_tag :not_finished, 1, @not_finished.present? ? true : false
+                %li
+                  =submit_tag 'Search', class: 'btn btn-warning'
+              %script
+                $('input#start_date').datepicker( { dateFormat: "yy-mm-dd" } );
+                $('input#end_date').datepicker( { dateFormat: "yy-mm-dd" } );
+    .container
+      .row
+        .col-lg-9
+          = bootstrap_flash
+          = yield
+        -if current_user
+          .col-lg-3
+            .well.sidebar-nav
+              %h3 Create task
+              %ul.nav.nav-list
+                -#%li.nav-header Sidebar
+                =form_for Task.new do |f|
+                  =f.select :project, ['OneClass','Easyke','Solvit'], {}, { selected: 'OneClass', class: 'chosen_field' }
+                  =f.select :developer_id, Developer.all.collect{|t| [t.name, t.id]} + ['General'], {}, { prompt: 'Choose Dev', class: 'chosen_field' }
+                  =f.text_field :start_date, value: "#{Time.now.search_date}", placeholder: 'START date', class: 'validate[required,custom[date]]'
+                  =f.text_field :end_date, placeholder: 'END date *optional'
+                  %br
+                  =f.text_area :task_name, placeholder: 'Task', class: 'validate[required]'
+
+                  =f.select :status, ['IceBox','Processing', 'Done', 'Reject', 'Finished'], {}, { class: 'chosen_field' }
+                  =f.select :score, [1,2,3,4,5,6,7,8,9,10], {}, { class: 'chosen_field' }
+                  %br
+                  =f.submit 'Submit', class: 'submit_form_btn btn btn-success'
+                %script
+                  $('.chosen_field').chosen();
+                  $('input#task_start_date').datepicker( { dateFormat: "yy-mm-dd", beforeShowDay: colorize } );
+                  $('input#task_end_date').datepicker( { dateFormat: "yy-mm-dd" } );
+
+                  $('input#task_start_date').change(function(e){
+                  $(e.currentTarget).validationEngine('hide');
+                  });
+                  $('.nav-list form').validationEngine();
+
+
+                  function str_pad(n) {return String("00" + n).slice(-2); };
+                  -#show green color when >= 4 tasks
+                  -# red color when < 4 tasks
+                  var greenDates = []
+                  //['8-15-2013', '8-22-2013'];
+                  var redDates = ['8-9-2013', '8-13-2013'];
+                  function colorize(date) {
+
+                  mdy = str_pad(date.getDate()) + '-' + str_pad(date.getMonth() + 1) + '-' + date.getFullYear();
+
+                  if ($.inArray(mdy, greenDates) > -1) {
+                  return [true, "green"];
+                  } else if ($.inArray(mdy, redDates) > -1) {
+                  return [true, "red"];
+                  } else {
+                  return [true, ""];
+                  };
+
+                  }
+
+      %footer
+        %p &copy; OneClass #{Time.now.year}

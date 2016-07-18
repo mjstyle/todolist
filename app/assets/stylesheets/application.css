@@ -1,0 +1,168 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require chosen-compass
+ *= require_tree .
+ */
+
+.finished_chekbox{
+    margin-left: -90px;
+}
+.head_block{
+    width: 250px;
+    margin-top: -10px;
+}
+
+ul.nav.navbar-nav li{
+    margin-top: 15px;
+    margin-left: 10px;
+    float: left;
+}
+.date_tasks_list .task{
+    clear: both;
+    width: 100%;
+}
+.date_tasks_list .task .dev_name{
+    float: left;
+}
+.remove_item{
+    cursor: pointer;
+    padding: 3px !important;
+    float: right;
+    margin-right: -50px;
+}
+.date_tasks_list .task .task_name, .date_tasks_list .task .task_name_edit{
+    cursor: pointer;
+    float: left;
+    margin-left: 20px;
+}
+.date_tasks_list .task .checkbox_done{
+    float: right;
+    margin-right: 50px;
+}
+.tasks_list .date_val{
+    border-bottom: 2px solid gray;
+    margin-bottom: 10px;
+}
+.tds_block{
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+.ui-sortable li.done{
+    background-color: #f3f3f3;
+}
+.ui-sortable li span.line_through{
+    height: 0px;
+    width: 92%;
+}
+.ui-sortable li.done span.line_through{
+    height: 1px;
+    border-top: #282b3e 1px solid;
+    display: block;
+    position: relative;
+    margin-top: 10px;
+}
+.ui-sortable li{
+    list-style: none;
+    background-color: rgba(170, 192, 197, 0.04);
+    height: 50px;
+    padding-left: 10px;
+    padding-top: 3px;
+
+}
+
+.ui-sortable li.done div{
+    text-decoration: line-through !important;
+}
+.ui-sortable li .dev_name, .ui-sortable li .task_name{
+    color: #282b3e;
+}
+.ui-sortable li .dev_name{
+    font-weight: 400;
+}
+
+.ui-sortable li .task_name{
+    font-weight: 500;
+}
+
+#ui-datepicker-div table.ui-datepicker-calendar tr td a{
+  text-align: center;
+}
+#ui-datepicker-div table.ui-datepicker-calendar tr td{
+    padding-bottom: 10px;
+    padding-right: 5px;
+}
+
+#ui-datepicker-div{
+    z-index: 9999 !important;
+    min-width: 350px;
+
+}
+
+
+#task_start_date{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#task_task_name{
+    border-radius: 5px;
+    margin-bottom: 5px;
+    width: 220px;
+    height: 70px;
+}
+#task_end_date{
+    margin-bottom: 10px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+th.ui-datepicker-week-end,
+td.ui-datepicker-week-end {
+    display: none;
+}
+#task_project_chosen{
+    width: 95px !important;
+}
+#task_developer_id_chosen{
+    width: 85px !important;
+}
+a.ui-state-default.ui-state-highlight{
+    padding: 5px;
+    text-align: center;
+}
+
+
+.submit_form_btn{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.blue a.ui-state-default {
+    background-color: #42a0ff;
+    background-image: none;
+}
+.red a.ui-state-default{
+    background-color: #ff313b;
+    background-image: none;
+}
+
+.green a.ui-state-default{
+    background-color: #78ff56;
+    background-image: none;
+}
+
+.yellow a.ui-state-default{
+    background-color: #f4ff30;
+    background-image: none;
+}
