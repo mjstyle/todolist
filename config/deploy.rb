@@ -41,7 +41,7 @@ end
 
 desc 'Run tasks in new production enviroment.'
 
-task :r_quiz do
+task :todolist do
   deploy_prompt("TODOLIST MASTER")
   set  :rails_env ,'production'
   set  :branch    ,'master'
