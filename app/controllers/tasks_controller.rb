@@ -59,10 +59,11 @@ class TasksController < ApplicationController
                         else
                           ''
                         end
-    @todays_tasks     = Task.where(conditions).where(blank_todays).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
-    @tomorrows_tasks  = Task.where(conditions).where(blank_tomorrows).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
-    @tasks            = Task.where(conditions).where(blank_conditions).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
-    render json: { tasks: @tasks, todays: @todays_tasks, tomorrows: @tomorrows_tasks }
+    @todays_tasks     = Task.where("developer_id != '0'").where(conditions).where(blank_todays).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position,project').order('start_date,position ASC')
+    @tomorrows_tasks  = Task.where("developer_id != '0'").where(conditions).where(blank_tomorrows).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position,project').order('start_date,position ASC')
+    @tasks            = Task.where("developer_id != '0'").where(conditions).where(blank_conditions).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position,project').order('start_date,position ASC')
+    @generals         = Task.where(developer_id: 0)
+    render json: { tasks: @tasks, todays: @todays_tasks, tomorrows: @tomorrows_tasks, generals: @generals }
   end
 
   def update_task_text

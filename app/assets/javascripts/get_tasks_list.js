@@ -24,6 +24,19 @@ function TaskNameUpdate(){
   });
 }
 
+
+function AppendTaskGeneral(val,root_el){
+  d_block   = root_el.find('.generals .generals_list');
+
+  project   = "<div class='project_name'>"+val.project+"</div>"
+
+  if(val.task_name != ''){task_val = val.task_name.replace(/\r?\n/g, '<br />')}else{task_val = val.task_name;}
+  task_name = "<div class='task_name'>"+task_val+"</div>"
+  if(val.status == 'finished'){ checked_txt = "checked='true'"; task_finished = 1; finished_class = 'done'; }else{ checked_txt = ''; task_finished = 0; finished_class = ''; };
+  checkbox  = "<input id='done_task_"+val.id+"' name='done_task["+val.id+"]' class='checkbox_done' type='checkbox' value='"+task_finished+"' "+checked_txt+">"
+  d_block.append("<li id='t_" + val.id + "' data-id='"+val.id+"' data-start-date='"+sd+"' data-position='"+val.position+"' class='task ui-state-default "+finished_class+"'>" +project+task_name+checkbox+"<div class='remove_item btn btn-danger'>X</div><span class='line_through'></span></li> ")
+}
+
 function AppendTask(weekday,val,root_el){
   sd        = val.start_date.replace('T00:00:00Z','');
   d_block   = root_el.find('#tds_'+sd) ;
@@ -39,10 +52,13 @@ function AppendTask(weekday,val,root_el){
   d_block = $("#tds_"+sd+" .date_tasks_list")
 
   dev_name  = "<div class='dev_name'>"+val.dev_name+"</div>"
-  task_name = "<div class='task_name'>"+val.task_name+"</div>"
+  project   = "<div class='project_name'>"+val.project+"</div>"
+
+  if(val.task_name != ''){task_val = val.task_name.replace(/\r?\n/g, '<br />')}else{task_val = val.task_name;}
+  task_name = "<div class='task_name'>"+task_val+"</div>"
   if(val.status == 'finished'){ checked_txt = "checked='true'"; task_finished = 1; finished_class = 'done'; }else{ checked_txt = ''; task_finished = 0; finished_class = ''; };
   checkbox  = "<input id='done_task_"+val.id+"' name='done_task["+val.id+"]' class='checkbox_done' type='checkbox' value='"+task_finished+"' "+checked_txt+">"
-  d_block.append("<li id='t_" + val.id + "' data-id='"+val.id+"' data-start-date='"+sd+"' data-position='"+val.position+"' class='task ui-state-default "+finished_class+"'>" +dev_name+task_name+checkbox+"<div class='remove_item btn btn-danger'>X</div><span class='line_through'></span></li> ")
+  d_block.append("<li id='t_" + val.id + "' data-id='"+val.id+"' data-start-date='"+sd+"' data-position='"+val.position+"' class='task ui-state-default "+finished_class+"'>" +dev_name+project+task_name+checkbox+"<div class='remove_item btn btn-danger'>X</div><span class='line_through'></span></li> ")
 }
 
 function GetTaskList(){
@@ -88,6 +104,12 @@ function GetTaskList(){
       $.each( resp.tasks, function( index, val ) {
         AppendTask(weekday,val,root_el)
       });
+
+      $.each( resp.generals, function( index, val ) {
+        AppendTaskGeneral(val,root_el)
+      });
+
+
 
       TaskNameUpdate();
 

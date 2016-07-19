@@ -26,11 +26,11 @@ ul.nav.navbar-nav li{
     margin-left: 10px;
     float: left;
 }
-.date_tasks_list .task{
+.date_tasks_list .task, .generals_list .task{
     clear: both;
     width: 100%;
 }
-.date_tasks_list .task .dev_name{
+.date_tasks_list .task .dev_name, .date_tasks_list .task .project_name, .generals_list .task .project_name{
     float: left;
 }
 .remove_item{
@@ -39,18 +39,23 @@ ul.nav.navbar-nav li{
     float: right;
     margin-right: -50px;
 }
-.date_tasks_list .task .task_name, .date_tasks_list .task .task_name_edit{
+.date_tasks_list .task .task_name, .generals_list .task .task_name, .date_tasks_list .task .task_name_edit, .generals_list .task .task_name_edit{
     cursor: pointer;
     float: left;
     margin-left: 20px;
 }
-.date_tasks_list .task .checkbox_done{
+.date_tasks_list .task .checkbox_done, .generals_list .task .checkbox_done{
     float: right;
     margin-right: 50px;
 }
 .tasks_list .date_val{
     border-bottom: 2px solid gray;
     margin-bottom: 10px;
+}
+.tds_block li{
+    display: table;
+    clear: all;
+    width: 900px;
 }
 .tds_block{
     margin-bottom: 30px;
@@ -82,11 +87,14 @@ ul.nav.navbar-nav li{
 .ui-sortable li.done div{
     text-decoration: line-through !important;
 }
-.ui-sortable li .dev_name, .ui-sortable li .task_name{
+.ui-sortable li .dev_name, .ui-sortable li .project_name, .ui-sortable li .task_name{
     color: #282b3e;
 }
-.ui-sortable li .dev_name{
+.ui-sortable li .dev_name, .ui-sortable li .project_name{
     font-weight: 400;
+}
+.project_name{
+    margin-left: 10px;
 }
 
 .ui-sortable li .task_name{
