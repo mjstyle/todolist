@@ -44,16 +44,25 @@ class TasksController < ApplicationController
       conditions += "#{and_w}status != 'finished' "
     end
 
+    tomorrow          = "#{Time.now.tomorrow.search_date} 00:00:00"
+    today             = "#{Time.now.search_date} 00:00:00"
+
     @this_week        = Time.now.beginning_of_week
     @begin_task       = @this_week - 2.weeks
     @end_task         = @this_week + 2.weeks
-    blank_conditions  = unless start_date.present? && end_date.present?
-                          "start_date >= '#{@begin_task.search_with_seconds}' AND start_date <= '#{@end_task}'"
+    blank_conditions, blank_todays, blank_tomorrows  = unless start_date.present? && end_date.present?
+                          [
+                              "start_date >= '#{@begin_task.search_with_seconds}' AND start_date <= '#{@end_task}' AND start_date != '#{today}' AND start_date != '#{tomorrow}'",
+                              "start_date = '#{today}'",
+                              "start_date = '#{tomorrow}'",
+                          ]
                         else
                           ''
                         end
-    @tasks      = Task.where(conditions).where(blank_conditions).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
-    render json: { tasks: @tasks }
+    @todays_tasks     = Task.where(conditions).where(blank_todays).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
+    @tomorrows_tasks  = Task.where(conditions).where(blank_tomorrows).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
+    @tasks            = Task.where(conditions).where(blank_conditions).select('id,dev_name,developer_id, start_date, end_date, status, score, task_name, position').order('start_date,position ASC')
+    render json: { tasks: @tasks, todays: @todays_tasks, tomorrows: @tomorrows_tasks }
   end
 
   def update_task_text

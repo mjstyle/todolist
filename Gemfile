@@ -13,7 +13,7 @@ gem 'mysql2', '~> 0.3.10'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier'    , '>= 1.0.3'
+  #gem 'uglifier'    , '>= 1.0.3'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
@@ -36,7 +36,7 @@ gem 'haml'
 gem 'sidekiq'
 gem 'bootstrap'
 gem 'twitter-bootstrap-rails'
-gem 'jquery-rails'
+#gem 'jquery-rails'
 gem 'chosen-rails'
 gem 'compass-rails'
 

@@ -23,6 +23,28 @@ function TaskNameUpdate(){
     });
   });
 }
+
+function AppendTask(weekday,val,root_el){
+  sd        = val.start_date.replace('T00:00:00Z','');
+  d_block   = root_el.find('#tds_'+sd) ;
+  d         = new Date(sd);
+  wd        = weekday[d.getDay()];
+  //console.log(wd);
+  //console.log(d.getDay());
+  if( d_block.length == 0 ){
+    root_el.append("<ul id='tds_" + sd + "' class='tds_block'><div class='date_val'><b>"+ sd + "</b> " + wd +"</div><div class='date_tasks_list'></div> </ul>");
+    d_block = root_el.find('#tds_'+sd);
+  };
+
+  d_block = $("#tds_"+sd+" .date_tasks_list")
+
+  dev_name  = "<div class='dev_name'>"+val.dev_name+"</div>"
+  task_name = "<div class='task_name'>"+val.task_name+"</div>"
+  if(val.status == 'finished'){ checked_txt = "checked='true'"; task_finished = 1; finished_class = 'done'; }else{ checked_txt = ''; task_finished = 0; finished_class = ''; };
+  checkbox  = "<input id='done_task_"+val.id+"' name='done_task["+val.id+"]' class='checkbox_done' type='checkbox' value='"+task_finished+"' "+checked_txt+">"
+  d_block.append("<li id='t_" + val.id + "' data-id='"+val.id+"' data-start-date='"+sd+"' data-position='"+val.position+"' class='task ui-state-default "+finished_class+"'>" +dev_name+task_name+checkbox+"<div class='remove_item btn btn-danger'>X</div><span class='line_through'></span></li> ")
+}
+
 function GetTaskList(){
 
   //var greenDates = ['8-15-2013', '8-22-2013'];
@@ -55,26 +77,16 @@ function GetTaskList(){
       weekday[4] = "Friday";
       weekday[5] = "Saturday";
 
+      $.each( resp.todays, function( index, val ) {
+        AppendTask(weekday,val,root_el)
+      });
+
+      $.each( resp.tomorrows, function( index, val ) {
+        AppendTask(weekday,val,root_el)
+      });
+
       $.each( resp.tasks, function( index, val ) {
-        sd        = val.start_date.replace('T00:00:00Z','');
-        d_block   = root_el.find('#tds_'+sd) ;
-        d         = new Date(sd);
-        wd        = weekday[d.getDay()];
-        //console.log(wd);
-        //console.log(d.getDay());
-        if( d_block.length == 0 ){
-          root_el.append("<ul id='tds_" + sd + "' class='tds_block'><div class='date_val'><b>"+ sd + "</b> " + wd +"</div><div class='date_tasks_list'></div> </ul>");
-          d_block = root_el.find('#tds_'+sd);
-        };
-
-        d_block = $("#tds_"+sd+" .date_tasks_list")
-
-        dev_name  = "<div class='dev_name'>"+val.dev_name+"</div>"
-        task_name = "<div class='task_name'>"+val.task_name+"</div>"
-        if(val.status == 'finished'){ checked_txt = "checked='true'"; task_finished = 1; finished_class = 'done'; }else{ checked_txt = ''; task_finished = 0; finished_class = ''; };
-        checkbox  = "<input id='done_task_"+val.id+"' name='done_task["+val.id+"]' class='checkbox_done' type='checkbox' value='"+task_finished+"' "+checked_txt+">"
-        d_block.append("<li id='t_" + val.id + "' data-id='"+val.id+"' data-start-date='"+sd+"' data-position='"+val.position+"' class='task ui-state-default "+finished_class+"'>" +dev_name+task_name+checkbox+"<div class='remove_item btn btn-danger'>X</div><span class='line_through'></span></li> ")
-
+        AppendTask(weekday,val,root_el)
       });
 
       TaskNameUpdate();

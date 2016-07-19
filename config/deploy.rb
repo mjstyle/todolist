@@ -14,9 +14,9 @@ set :rvm_type, :user
 # set :rvm_type, :system
 # set :rvm_bin_path, "/home/deploy/.rvm/bin"
 
-set :application, 'r_quiz'
+set :application, 'todolist'
 set :scm        , :git
-set :repository , 'git@github.com:notesolution/todolist.git'
+set :repository , 'git@github.com:mjstyle/todolist.git'
 set :user       , 'deploy'
 set :use_sudo   , false
 set(:deploy_to)   {"/var/www/#{application}"}
@@ -45,7 +45,7 @@ task :todolist do
   deploy_prompt("TODOLIST MASTER")
   set  :rails_env ,'production'
   set  :branch    ,'master'
-  set  :host      ,'54.86.65.254'
+  set  :host      ,'50.16.139.20'
   set  :user      ,'ubuntu'
   set  :normalize_asset_timestamps, false
   role :app       ,host
