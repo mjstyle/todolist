@@ -48,11 +48,11 @@ class TasksController < ApplicationController
     today             = "#{Time.now.search_date} 00:00:00"
 
     @this_week        = Time.now.beginning_of_week
-    @begin_task       = @this_week - 2.weeks
-    @end_task         = @this_week + 2.weeks
+    @begin_task       = @this_week - 3.days
+    @end_task         = @this_week + 3.days
     blank_conditions, blank_todays, blank_tomorrows  = unless start_date.present? && end_date.present?
                           [
-                              "start_date >= '#{@begin_task.search_with_seconds}' AND start_date <= '#{@end_task}' AND start_date != '#{today}' AND start_date != '#{tomorrow}'",
+                              "start_date >= '#{@begin_task.search_date} 00:00:00' AND start_date <= '#{@end_task.search_date} 00:00:00' AND start_date != '#{today}' AND start_date != '#{tomorrow}'",
                               "start_date = '#{today}'",
                               "start_date = '#{tomorrow}'",
                           ]
